@@ -718,7 +718,7 @@ Interpreter.prototype.initString = function(scope) {
   wrapper = function(separator, limit) {
     var str = this.toString();
     if (separator) {
-      separator = thisInterpreter.isa(separator, thisInterpreter.REGEXP) 
+      separator = thisInterpreter.isa(separator, thisInterpreter.REGEXP)
                   ? separator.data : separator.toString();
     } else { // is this really necessary?
       separator = undefined;
@@ -1503,7 +1503,8 @@ Interpreter.prototype.setValueToScope = function(name, value) {
     }
     scope = scope.parentScope;
   }
-  throw 'Unknown identifier: ' + nameStr;
+  return this.setProperty(this.getScope(), nameStr, value);
+  //throw 'Unknown identifier: ' + nameStr;
 };
 
 /**
