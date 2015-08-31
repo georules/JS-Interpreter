@@ -31,12 +31,18 @@
  *     global scope object.
  * @constructor
  */
-var Interpreter = function(code, opt_initFunc) {
-  this.initFunc_ = opt_initFunc;
-  this.UNDEFINED = this.createPrimitive(undefined);
-  this.ast = acorn.parse(code);
-  var scope = this.createScope(this.ast, null);
-  this.stateStack = [{node: this.ast, scope: scope, thisExpression: scope}];
+var Interpreter = function(ast, opt_initFunc) {
+  try {
+    this.initFunc_ = opt_initFunc;
+    this.UNDEFINED = this.createPrimitive(undefined);
+    //this.ast = acorn.parse(code);
+    this.ast = ast;
+    var scope = this.createScope(this.ast, null);
+    this.stateStack = [{node: this.ast, scope: scope, thisExpression: scope}];
+  }
+  catch(e) {
+    //console.log(e)
+  }
 };
 
 /**
@@ -44,6 +50,7 @@ var Interpreter = function(code, opt_initFunc) {
  * @return {boolean} True if a step was executed, false if no more instructions.
  */
 Interpreter.prototype.step = function() {
+
   if (this.stateStack.length == 0) {
     return false;
   }

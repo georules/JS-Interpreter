@@ -37,12 +37,18 @@
   <script>
     var myInterpreter;
     function initAlert(interpreter, scope) {
-      var wrapper = function(text) {
-        text = text ? text.toString() : '';
-        return interpreter.createPrimitive(alert(text));
-      };
-      interpreter.setProperty(scope, 'alert',
-          interpreter.createNativeFunction(wrapper));
+
+      // Create empty 'console' object.
+var myConsole = interpreter.createObject(interpreter.OBJECT);
+interpreter.setProperty(scope, 'console', myConsole);
+
+// Add 'log' function to console.
+var wrapper = function(text) {
+  text = text ? text.toString() : '';
+  return interpreter.createPrimitive(console.log(text));
+};
+this.setProperty(myConsole, 'log',
+                     this.createNativeFunction(wrapper)); 
     };
 
     function parseButton() {
