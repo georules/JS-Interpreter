@@ -220,6 +220,9 @@ Interpreter.prototype.initFunction = function(scope) {
   this.setProperty(this.FUNCTION.properties.prototype, 'call',
                    this.createFunction(node, {}), false, true);
 
+  this.setProperty(this.FUNCTION.properties.prototype, 'bind',
+                    this.createFunction(node, {}), false, true);
+
   // Function has no parent to inherit from, so it needs its own mandatory
   // toString and valueOf functions.
   wrapper = function() {
