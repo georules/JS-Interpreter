@@ -1504,7 +1504,8 @@ Interpreter.prototype.setValueToScope = function(name, value) {
     }
     scope = scope.parentScope;
   }
-  throw 'Unknown identifier: ' + nameStr;
+  //throw 'Unknown identifier: ' + nameStr;
+  return this.setProperty(this.getScope(), nameStr, value);
 };
 
 /**
